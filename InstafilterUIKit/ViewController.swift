@@ -11,6 +11,7 @@ import CoreImage
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     @IBOutlet var imageView: UIImageView!
     @IBOutlet var intensity: UISlider!
+    @IBOutlet var changeFilterBtn: UIButton!
     
     var currentImage: UIImage!
     var context: CIContext!
@@ -67,8 +68,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         guard currentImage != nil else { return }
         guard let actionTitle = action.title else { return }
         
-        currentFilter = CIFilter(name: actionTitle)
+        changeFilterBtn.titleLabel?.text = actionTitle
         
+        currentFilter = CIFilter(name: actionTitle)
         let beginImage = CIImage(image: currentImage)
         currentFilter.setValue(beginImage, forKey: kCIInputImageKey)
         
@@ -76,7 +78,12 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     @IBAction func save(_ sender: UIButton) {
-        guard let image = imageView.image else { return }
+        guard let image = imageView.image else {
+            let ac = UIAlertController(title: "No image", message: "There is no image to save.", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            present(ac, animated: true)
+            return
+        }
         
         UIImageWriteToSavedPhotosAlbum(image, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
     }

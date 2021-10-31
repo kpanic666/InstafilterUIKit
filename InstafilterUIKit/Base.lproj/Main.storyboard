@@ -93,6 +93,7 @@
                         <nil key="title"/>
                     </navigationItem>
                     <connections>
+                        <outlet property="changeFilterBtn" destination="dpa-Ef-v4Q" id="rDg-PP-ZoI"/>
                         <outlet property="imageView" destination="ADv-rV-x0C" id="qca-Wh-hHb"/>
                         <outlet property="intensity" destination="LdO-hk-GA0" id="PtN-NM-aBO"/>
                     </connections>
